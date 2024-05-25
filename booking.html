@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Ticket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><img src="./logo.jpg" alt="Logo"></li>
+                <li><a href="index.html">Эхлэл</a></li>
+                <li><a href="movies.html">Захиалга</a></li>
+                <li><a href="login.html">Нэвтрэх</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="order-section">
+        <h1 id="movie-title">Тасалбар захиалах</h1>
+        <form id="order-form">
+            <div class="form-group">
+                <label for="movie-times">Цаг сонгох:</label>
+                <select id="movie-times" name="movie-times"></select>
+            </div>
+            <div class="form-group">
+                <label>Байршил:</label>
+                <div class="location-buttons">
+                    <button type="button" data-location="Зайсан">Зайсан</button>
+                    <button type="button" data-location="Ботаник">Ботаник</button>
+                    <button type="button" data-location="Энканто">Энканто</button>
+                </div>
+                <input type="hidden" id="location" name="location" required>
+            </div>
+            <button type="submit">Захиалах</button>
+        </form>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const times = params.get('times').split(',');
+
+            document.getElementById('movie-title').textContent = title;
+
+            const timesSelect = document.getElementById('movie-times');
+            times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.textContent = time;
+                timesSelect.appendChild(option);
+            });
+
+            const locationButtons = document.querySelectorAll('.location-buttons button');
+            locationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    locationButtons.forEach(btn => btn.style.backgroundColor = black);
+                    this.style.backgroundColor = black;
+                    document.getElementById('location').value = this.dataset.location;
+                });
+            });
+
+            document.getElementById('order-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (!document.getElementById('location').value) {
+                    alert('Байршил сонгоно уу');
+                    return;
+                }
+                alert('Тасалбар амжилттай захиалагдлаа!');
+                // Add additional logic to handle form submission, e.g., sending data to a server
+            });
+        });
+    </script>
+</body>
+</html>

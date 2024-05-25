@@ -11,22 +11,50 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
         const movies = data.record;
         const movieContainer = document.querySelector('.movie-container');
-        movies.forEach(movie => {
-            const card = document.createElement('div');
-            card.classList.add('movie-card');
+        const categoryButtonsContainer = document.querySelector('.category-buttons');
 
-            card.innerHTML = `
-                <img src="${movie.image}" alt="${movie.title}" class="movie-image">
-                <div class="movie-info">
-                    <h3 class="movie-title">${movie.title}</h3>
-                    <p class="movie-times">${movie.times.join(', ')}</p>
-                    <p>${movie.description}</p>
-                    <a href="order.html" class="book-button">Тасалбар захиалах</a>
-                </div>
-            `;
+        const categories = [...new Set(movies.map(movie => movie.category))];
+        categories.unshift('All'); // Add 'All' category
 
-            movieContainer.appendChild(card);
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.textContent = category;
+            button.dataset.category = category;
+            button.addEventListener('click', () => filterMovies(category, movies));
+            categoryButtonsContainer.appendChild(button);
         });
+
+        displayMovies(movies);
+
+        function filterMovies(category, movies) {
+            if (category === 'All') {
+                displayMovies(movies);
+            } else {
+                const filteredMovies = movies.filter(movie => movie.category === category);
+                displayMovies(filteredMovies);
+            }
+        }
+
+        function displayMovies(movies) {
+            movieContainer.innerHTML = '';
+            movies.forEach(movie => {
+                const card = document.createElement('div');
+                card.classList.add('movie-card');
+
+                const timesButtons = movie.times.map(time => `<button class="time-button">${time}</button>`).join(' ');
+
+                card.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title}" class="movie-image">
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-times">${timesButtons}</div>
+                        <a href="booking.html?title=${encodeURIComponent(movie.title)}&times=${encodeURIComponent(movie.times.join(','))}" class="book-button">Тасалбар захиалах</a>
+                    </div>
+                `;
+
+                movieContainer.appendChild(card);
+            });
+        }
     })
     .catch(error => {
         console.error('Error loading the movies:', error);
