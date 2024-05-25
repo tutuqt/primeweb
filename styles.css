@@ -256,7 +256,7 @@ header {
         margin-right: 10%;
         gap: 10px;
         margin-bottom: 20px;
-        & button {
+        & my-cat-btn {
             padding: 10px 20px;
             background-color: var(--background-color-0);
             color: var(--text-color-0);
@@ -266,6 +266,7 @@ header {
             transition: background-color 0.3s;
             width: 100%;
             border: var(--border-attribute-0);
+            text-align: center;
         }
         & button:hover {
             background-color: var(--background-color-0);
