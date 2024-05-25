@@ -14,17 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const categoryButtonsContainer = document.querySelector('.category-buttons');
 
         const categories = [...new Set(movies.map(movie => movie.category))];
-        categories.unshift('All'); // Add 'All' category
+        categories.unshift('All'); 
 
         categories.forEach(category => {
             const button = document.createElement('button');
             button.textContent = category;
             button.dataset.category = category;
-            button.addEventListener('click', () => filterMovies(category, movies));
+            button.addEventListener('click', () => {
+                filterMovies(category, movies);
+                updateURLWithCategory(category);
+            });
             categoryButtonsContainer.appendChild(button);
         });
 
-        displayMovies(movies);
+        const params = new URLSearchParams(window.location.search);
+        const categoryParam = params.get('category');
+        if (categoryParam && categories.includes(categoryParam)) {
+            filterMovies(categoryParam, movies);
+        } else {
+            displayMovies(movies);
+        }
 
         function filterMovies(category, movies) {
             if (category === 'All') {
@@ -55,9 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 movieContainer.appendChild(card);
             });
         }
+
+        function updateURLWithCategory(category) {
+            const params = new URLSearchParams(window.location.search);
+            if (category === 'All') {
+                params.delete('category');
+            } else {
+                params.set('category', category);
+            }
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            history.pushState(null, '', newUrl);
+        }
     })
-    .catch(error => {
-        console.error('Error loading the movies:', error);
-        alert('Failed to load movies. Please check the console for more information.');
-    });
 });

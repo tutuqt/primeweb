@@ -18,11 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 card.innerHTML = `
                     <img src="${movie.image}" alt="${movie.title}" class="movie-image">
-                    <div class="movie-info">
-                        <h3 class="movie-title">${movie.title}</h3>
-                        <p class="movie-times">${movie.times.join(', ')}</p>
-                        <p>${movie.description}</p>
-                    </div>
                 `;
 
                 movieContainer.appendChild(card);
