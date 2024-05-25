@@ -142,8 +142,6 @@ nav.scrolled{
 .featured-movies {
     background: white;
     text-align: center;
-    margin-left: var(--position-left-0);
-    margin-right: var(--position-left-0);
     & .movie-info{
         text-align: justify;
     }
