@@ -38,17 +38,17 @@ function startSelecting() {
     numberOfSeats = parseInt(document.getElementById('numSeats').value);
 
     if (!name || numberOfSeats < 1) {
-        alert('Please enter a valid name and number of seats.');
+        alert('Суудлын тоог зөв оруул');
         return;
     }
 
     selectedSeats = [];
     document.querySelectorAll('.seat.selected').forEach(seat => seat.classList.remove('selected'));
-    document.getElementById('confirmSelection').style.display = 'block';
+    document.querySelector('.seat-selection').style.display = 'block';  // Ensure this line makes the seat-selection section visible
 }
 
 function toggleSeatSelection(seat) {
-    if (seat.classList.contains('reserved') || selectedSeats.length >= numberOfSeats && !seat.classList.contains('selected')) {
+    if (seat.classList.contains('reserved') || (selectedSeats.length >= numberOfSeats && !seat.classList.contains('selected'))) {
         return;
     }
 
@@ -66,13 +66,18 @@ function confirmSelection() {
     const name = document.getElementById('name').value;
 
     if (selectedSeats.length !== numberOfSeats) {
-        alert(`Please select exactly ${numberOfSeats} seats.`);
+        alert(`Та зөвхөн ${numberOfSeats} суудал сонгоно уу.`);
         return;
     }
 
     const reservedSeats = JSON.parse(localStorage.getItem('reservedSeats')) || [];
+    const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+
     selectedSeats.forEach(seat => reservedSeats.push(seat));
     localStorage.setItem('reservedSeats', JSON.stringify(reservedSeats));
+
+    reservations.push({ name, numberOfSeats, seats: selectedSeats });
+    localStorage.setItem('reservations', JSON.stringify(reservations));
 
     selectedSeats.forEach(seat => {
         const seatElement = document.querySelector(`.seat[data-seat="${seat}"]`);
@@ -98,16 +103,3 @@ function loadReservations() {
         }
     });
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieTitle = urlParams.get('title');
-    const movieTime = urlParams.get('time');
-    const movieLocation = urlParams.get('location');
-    const movieImage = urlParams.get('image');
-
-    document.getElementById('order-movie-title').textContent = movieTitle;
-    document.getElementById('order-time').textContent = movieTime;
-    document.getElementById('order-location').textContent = movieLocation;
-    document.getElementById('order-movie-image').src = movieImage;
-});
-
