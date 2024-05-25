@@ -71,3 +71,46 @@ function fetchUpcomingMovies() {
         })
         .catch(error => console.error('Error fetching the upcoming movies:', error));
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get('title');
+    const times = params.get('times').split(',');
+    const imageUrl = params.get('image'); // Assuming image URL is passed as a parameter
+
+    document.getElementById('movie-title').textContent = title;
+    document.getElementById('movie-image').style.backgroundImage = `url(${imageUrl})`;
+
+    const timeButtonsContainer = document.getElementById('time-buttons');
+    times.forEach(time => {
+        const button = document.createElement('button');
+        button.textContent = time;
+        button.dataset.time = time;
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.time-buttons button').forEach(btn => btn.style.backgroundColor = 'var(--color-blue-3)');
+            this.style.backgroundColor = 'var(--color-blue-0)';
+            document.getElementById('movie-time').value = this.dataset.time;
+        });
+        timeButtonsContainer.appendChild(button);
+    });
+
+    const locationButtons = document.querySelectorAll('.location-buttons button');
+    locationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            locationButtons.forEach(btn => btn.style.backgroundColor = 'black');
+            this.style.backgroundColor = 'black';
+            document.getElementById('location').value = this.dataset.location;
+        });
+    });
+
+    document.getElementById('order-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (!document.getElementById('location').value || !document.getElementById('movie-time').value) {
+            alert('Байршил болон цаг сонгоно уу');
+            return;
+        }
+        alert('Тасалбар амжилттай захиалагдлаа!');
+        // Add additional logic to handle form submission, e.g., sending data to a server
+    });
+});
+
+

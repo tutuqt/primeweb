@@ -3,76 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Ticket</title>
+    <title>Booking</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        
-    </style>
+    <link rel="stylesheet" href="booking.css">
+    <script>
+        document.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 0) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdownContent = document.getElementById('dropdown-content');
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        }
+    </script>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="nav-links">
-                <li><img src="./logo.jpg" alt="Logo"></li>
-                <li><a href="index.html">Эхлэл</a></li>
-                <li><a href="movies.html">Захиалга</a></li>
-                <li><a href="login.html">Нэвтрэх</a></li>
-            </ul>
+    <header class="header">
+            <nav>
+                <img src="./logo.jpg" alt="Logo" class="logo">
+                <ul class="nav-links">
+                    <li><a href="index.html">Эхлэл</a></li>
+                    <li><a href="movies.html">Захиалга</a></li>
+                    <li><a href="login.html">Нэвтрэх</a></li>
+                </ul>
+                <div class="dropdown">
+                    <button class="dropdown-btn" onclick="toggleDropdown()">☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html">Эхлэл</a>
+                        <a href="movies.html">Захиалга</a>
+                        <a href="login.html">Нэвтрэх</a>
+                    </div>
+                </div>
         </nav>
     </header>
-    <section class="order-section">
-        <h1 id="movie-title">Тасалбар захиалах</h1>
-        <form id="order-form">
-            <div class="form-group">
-                <label for="movie-times">Цаг сонгох:</label>
-                <select id="movie-times" name="movie-times"></select>
-            </div>
-            <div class="form-group">
-                <label>Байршил:</label>
-                <div class="location-buttons">
-                    <button type="button" data-location="Зайсан">Зайсан</button>
-                    <button type="button" data-location="Ботаник">Ботаник</button>
-                    <button type="button" data-location="Энканто">Энканто</button>
+    <section class="booking-section">
+        <div class="movie-details">
+            <img id="movie-image" src="" alt="Movie Image" class="movie-image">
+        </div>
+        <div class="movie-info">
+            <h2 id="movie-title" class="movie-title">Киноны мэдээлэл</h2>
+            <form id="booking-form">
+                <div class="form-group">
+                    <label for="time-select">Цаг сонгох:</label>
+                    <div id="time-buttons" class="time-buttons"></div>
                 </div>
-                <input type="hidden" id="location" name="location" required>
-            </div>
-            <button type="submit">Захиалах</button>
-        </form>
+                <div class="form-group">
+                    <label for="location-select">Байршил сонгох:</label>
+                    <select id="location-select" name="location-select">
+                        <option value="Зайсан">Зайсан</option>
+                        <option value="Энканто">Энканто</option>
+                        <option value="Ботаник">Ботаник</option>
+                    </select>
+                </div>
+                <button type="submit">Захиалах</button>
+                <button type="button" onclick="window.history.back()">Буцах</button>
+            </form>
+        </div>
     </section>
+    <footer>
+        <p>© 2024 Movie Ticket Booking. All rights reserved.</p>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            const title = params.get('title');
-            const times = params.get('times').split(',');
+            const url = 'https://api.jsonbin.io/v3/b/6641a122e41b4d34e4f2f3af';
 
-            document.getElementById('movie-title').textContent = title;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const movies = data.record;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const movieTitle = urlParams.get('title');
+                    const movie = movies.find(m => m.title === movieTitle);
 
-            const timesSelect = document.getElementById('movie-times');
-            times.forEach(time => {
-                const option = document.createElement('option');
-                option.value = time;
-                option.textContent = time;
-                timesSelect.appendChild(option);
-            });
+                    if (movie) {
+                        document.getElementById('movie-title').textContent = movie.title;
+                        document.getElementById('movie-image').src = movie.image;
 
-            const locationButtons = document.querySelectorAll('.location-buttons button');
-            locationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    locationButtons.forEach(btn => btn.style.backgroundColor = black);
-                    this.style.backgroundColor = black;
-                    document.getElementById('location').value = this.dataset.location;
+                        const timeButtons = document.getElementById('time-buttons');
+                        movie.times.forEach(time => {
+                            const button = document.createElement('button');
+                            button.type = 'button';
+                            button.value = time;
+                            button.textContent = time;
+                            button.addEventListener('click', function() {
+                                document.querySelectorAll('.time-buttons button').forEach(btn => btn.classList.remove('selected'));
+                                button.classList.add('selected');
+                            });
+                            timeButtons.appendChild(button);
+                        });
+
+                        const bookingForm = document.getElementById('booking-form');
+                        bookingForm.addEventListener('submit', function(event) {
+                            event.preventDefault();
+
+                            const selectedTimeButton = document.querySelector('.time-buttons button.selected');
+                            if (!selectedTimeButton) {
+                                alert('Please select a time.');
+                                return;
+                            }
+                            const selectedTime = selectedTimeButton.value;
+                            const selectedLocation = document.getElementById('location-select').value;
+
+                            window.location.href = `order.html?title=${encodeURIComponent(movie.title)}&time=${encodeURIComponent(selectedTime)}&location=${encodeURIComponent(selectedLocation)}&image=${encodeURIComponent(movie.image)}`;
+                        });
+                    } else {
+                        alert('Movie not found!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading the movies:', error);
+                    alert('Failed to load movies. Please check the console for more information.');
                 });
-            });
-
-            document.getElementById('order-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                if (!document.getElementById('location').value) {
-                    alert('Байршил сонгоно уу');
-                    return;
-                }
-                alert('Тасалбар амжилттай захиалагдлаа!');
-                // Add additional logic to handle form submission, e.g., sending data to a server
-            });
         });
     </script>
 </body>

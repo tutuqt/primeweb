@@ -98,3 +98,16 @@ function loadReservations() {
         }
     });
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieTitle = urlParams.get('title');
+    const movieTime = urlParams.get('time');
+    const movieLocation = urlParams.get('location');
+    const movieImage = urlParams.get('image');
+
+    document.getElementById('order-movie-title').textContent = movieTitle;
+    document.getElementById('order-time').textContent = movieTime;
+    document.getElementById('order-location').textContent = movieLocation;
+    document.getElementById('order-movie-image').src = movieImage;
+});
+

@@ -1,0 +1,222 @@
+* { 
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --color-black-0: #000;
+    --color-black-1: #0c0c0c;
+    --color-blue-0: #009fff;
+    --color-blue-1: #200ea3;
+    --color-blue-2: #38419D;
+    --color-blue-3: #3887BE;
+    --color-blue-4: #52d3d8;
+    --color-white-0: #fff;
+    --size-default-0: 1rem;
+    --size-default-1: 1.2rem;
+    --size-default-2: 0.8rem;
+    --size-default-3: 24px;
+    --size-default-4: 20px;
+    --size-default-5: 16px;
+    --size-default-6: 12px;
+    --size-default-7: 4.5rem;
+    --size-default-8: 4rem;
+    --size-default-9: 3rem;
+    --size-default-10: 4px;
+    --font-default-0: 3rem;
+    --font-default-1: 2rem;
+    --font-default-2: 1.2rem;
+    --background-color-0: var(--color-black-0);
+    --background-color-1: var(--color-white-0);
+    --background-color-2: var(--color-blue-1);
+    --text-color-0: var(--color-white-0);
+    --text-color-1: var(--color-black-0);
+    --border-attribute-0: 1px solid var(--color-white-0); /* before hover */
+    --border-attribute-1: 1px solid var(--color-black-0); /* before hover */
+    --border-attribute-2: 2px solid var(--color-blue-0);  /* after hover */
+    --border-radius-0: var(--size-default-3);   /* parent box */
+    --border-radius-1: var(--size-default-4);   /* normal box */
+    --border-radius-2: var(--size-default-5);   /* child box */
+    --border-radius-3: var(--size-default-10);  /* small box */
+    --transform-attribute-0: scale(1);          /* before hover */
+    --transform-attribute-1: scale(1.1);        /* after hover */
+    --transition-attribute-0: 0.3s ease-in;
+    --position-left-0: 10%;    /* left indent */
+    --padding-default-0: var(--size-default-6); /* small padding */
+    --padding-default-1: var(--size-default-5); /* big padding */
+    --margin-default-0: var(--size-default-6);  /* small margin */
+    --margin-default-1: var(--size-default-5);  /* big margin */
+    --margin-default-2: 10vh;
+    --margin-default-3: 10%;
+    --zindex-background: 1;
+    --zindex-article: 5;
+    --zindex-button: 10;
+    --zindex-navbar: 15;
+    --drop-shadow: drop-shadow(5px 5px 10px var(--color-black-1));
+    --box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body {
+    background-color: var(--background-color-1);
+    color: var(--text-color-1);
+}
+
+header {
+    background: var(--background-color-0);
+    color: var(--background-color-1);
+    padding: var(--padding-default-0);
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--size-default-9);
+    position: sticky;
+    top: 0;
+    padding-left: var(--position-left-0);
+    padding-right: var(--position-left-0);
+    background-color: var(--background-color-0);
+    border: none;
+    z-index: var(--zindex-navbar);
+}
+
+nav ul li img { 
+    height: 100%;
+    width: 9rem;
+}
+
+nav ul li a {
+    color: var(--text-color-0);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: var(--font-default-2);
+}
+
+nav.scrolled {
+    background-color: var(--color-black-1);
+    height: var(--size-default-8);
+    opacity: 0.5;
+}
+
+.booking-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 10%;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.movie-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.movie-image {
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+    margin-left: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #111;
+    color: #fff;
+}
+
+#booking-form {
+    background-color: var(--background-color-1);
+}
+
+.movie-title {
+    color: var(--text-color-0);
+    margin-bottom: 20px;
+}
+.button-group button.selected {
+    background-color: #007bff;
+    color: white;
+}
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+    
+    .dropdown {
+        display: block;
+        position: relative;
+    }
+
+    .dropdown-btn {
+        background-color: var(--background-color-0);
+        color: var(--text-color-0);
+        padding: var(--padding-default-1);
+        border: none;
+        border-radius: var(--border-radius-2);
+        cursor: pointer;
+        font-size: var(--font-default-2);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--background-color-0);
+        min-width: 160px;
+        box-shadow: var(--box-shadow);
+        z-index: var(--zindex-navbar);
+        border-radius: var(--border-radius-2);
+    }
+
+    .dropdown-content a {
+        color: var(--text-color-0);
+        padding: var(--padding-default-1);
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: var(--background-color-1);
+        color: var(--text-color-1);
+    }
+}
+
+
