@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const url = 'https://api.jsonbin.io/v3/b/6641a122e41b4d34e4f2f3af';
 
