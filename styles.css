@@ -33,7 +33,7 @@
     --background-color-2: var(--color-blue-1);
     --text-color-0: var(--color-white-0);
     --text-color-1: var(--color-black-0);
-    --border-attribute-0: 1px solid var(--color-white-0);
+    --border-attribute-0: 0.4px solid var(--color-white-0);
     --border-attribute-1: 1px solid var(--color-black-0);
     --border-attribute-2: 2px solid var(--color-blue-0);
     --border-radius-0: var(--size-default-3);
@@ -84,16 +84,18 @@ body {
         bottom: 0;
         width: 100%;
     }
+    
 }
-input[type="email"], input[type="password"] {
-    width: calc(100% - 22px);
-    padding: var(--padding-default-0);
-    margin: var(--margin-default-0);
-    border: var(--border-attribute-0);
-    border-radius: var(--border-radius-3);
+body.dark-mode {
+    --background-color-0: var(--color-white-0);
+    --background-color-1: var(--color-black-0);
+    --text-color-0: var(--color-black-0);
+    --text-color-1: var(--color-white-0);
+    background-color: var(--background-color-0);
+    color: var(--text-color-0);
 }
 header {
-    background: var(--background-color-0);
+    background: var(--color-black-0);
     color: var(--background-color-1);
     padding: var(--padding-default-0);
     text-align: center;
@@ -106,7 +108,7 @@ header {
         top: 0;
         padding-left: var(--position-left-0);
         padding-right: var(--position-left-0);
-        background-color: var(--background-color-0);
+        background-color: var(--color-black-0);
         border: none;
         z-index: var(--zindex-navbar);
         & ul{
@@ -115,7 +117,7 @@ header {
             & li{
                 margin: 0 10px;
                 & a{
-                    color: var(--text-color-0);
+                    color: var(--color-white-0);
                     text-decoration: none;
                     font-weight: bold;
                     font-size: var(--font-default-2);
@@ -165,25 +167,23 @@ header {
         }
     }
 }
-.log-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    & .login-box {
-        background-color: #fff;
+.login-box {
+        background-color: var(--background-color-0);
         padding: 30px;
-        border-radius: 8px;
+        margin-top: 100px;
+        margin-left: 35%;
+        margin-right: 35%;
+        border: var(--border-attribute-0);
+        border-radius: var(--border-radius-3);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         text-align: center;
         transition: background-color 0.3s, color 0.3s;
     }
     & #login-form {
-        width: 100%;
         & h2 {
             margin-bottom: 20px;
         }
@@ -216,34 +216,14 @@ header {
             color: #007bff;
             text-decoration: none;
         }
-        &a:hover {
+        & a:hover {
             text-decoration: underline;
         }
-    }
-}
-.toggle-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    & .dark-mode {
-        background: linear-gradient(to right, #000000, #434343);
-        & .login-box {
-            background-color: #333;
-            color: #fff;
-        }
-        & #login-form input {
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #555;
-        }
-        & #login-form button {
-            background-color: #28a745;
-        }
-        & #login-form button:hover {
-            background-color: #218838;
+        & i{
+            color:var(--color-white-0) ;
         }
     }
-}
+
 .movies-list {
     padding: 20px;
     background-color:var(--background-color-0);
@@ -278,14 +258,14 @@ header {
         margin-left: 10%;
         margin-right: 10%;
         justify-content: space-between;
-        gap: 20px;
+        gap: 10px;
         & .movie-card {
             background: var(--color-black-1);
             box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
-            border-radius: var(--border-radius-0);
+            border-radius: var(--border-radius-3);
             border-color: var(--background-color-1);
             overflow: hidden;
-            width: 300px;
+            width: 315px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -353,7 +333,7 @@ header {
         & .movie-card{
             background: lightcoral;
             box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
-            border-radius: var(--border-radius-0);
+            border-radius: var(--border-radius-3);
             border-color: var(--background-color-1);
             overflow: hidden;;
             display: flex;
@@ -448,6 +428,7 @@ header {
 .order-section {
     margin: var(--margin-default-2) var(--margin-default-3);
     text-align: center;
+    background-color: var(--background-color-0);
     & h1 {
         font-size: var(--font-default-0);
         color: var(--color-blue-2);
@@ -517,6 +498,134 @@ header {
             }
         } 
     }
+}
+.order-container {
+    background: var(--background-color-0);
+    padding: 20px;
+    border: var(--border-attribute-0);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10%;
+    margin-right: 10%;
+    width: auto;
+    text-align: center;
+    & .form {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 50px;
+    }
+    & label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    & input {
+        margin-bottom: 10px;
+        padding: 5px;
+        width: 100%;
+    }
+    & button {
+        padding: 10px;
+        width: 100%;
+        background-color: var(--background-color-0);
+        color: white;
+        border: var(--border-attribute-0);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    & button:hover {
+        background-color: var(--color-blue-0);
+    }
+    & .seat-selection {
+        display: none;
+        text-align: center;
+    }
+    & .screen {
+        background-color: #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    & .seats {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 5px;
+        justify-items: center;
+    }
+    & .seat {
+        background-color: #444;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    & .seat.selected {
+        background-color: #6c757d;
+    }
+    & .seat.reserved {
+        background-color: #ff0000;
+        cursor: not-allowed;
+    }
+    
+}
+.booking-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 10%;
+    background-color: var(--background-color-0);
+    padding: 20px;
+    border-radius: 10px;
+    & .movie-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    & h2{
+        font-size: 50px;
+        margin-bottom: 10px;
+    }
+    & .movie-image {
+        width: 300px;
+        height: 400px;
+        border-radius: 10px;
+    }
+    & .movie-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex: 1;
+        margin-left: 20px;
+    }
+    & form {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin-bottom: 20px;
+    }
+    & .form-group {
+        margin-bottom: 20px;
+    }
+    & button {
+        background-color: var(--background-color-0);
+        color: white;
+        border: var(--border-attribute-0);
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-right: 16px;
+    }
+    & button:hover {
+        background-color: #0056b3;
+    }
+    & .selected {
+        background-color: #0056b3 !important;
+        color: white;
+    }
+    
 }
 @media (max-width: 768px) {
     nav ul {
